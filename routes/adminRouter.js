@@ -1,7 +1,7 @@
 import express from 'express';
 
 import { loginSchema } from '../validation/schemas.js';
-import { validate } from '../middlewares/validate.js';
+import { validate } from '../validation/validate.js';
 import { loginHandler } from './handlers/loginHandler.js';
 import { auth } from '../middlewares/auth.js';
 import { isAdmin } from '../middlewares/isAdmin.js';

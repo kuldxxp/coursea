@@ -29,5 +29,5 @@ export const loginSchema = z.object({
 
 export const paginationSchema = z.object({
     page: z.coerce.number().int().min(1).default(1),
-    limit: z.coerce.number().int().min().max(36).default(18),
+    limit: z.coerce.number().int().min(1).max(36).default(18),
 });

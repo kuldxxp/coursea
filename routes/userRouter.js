@@ -2,7 +2,7 @@ import express from 'express';
 
 import { signupSchema, loginSchema, paginationSchema } from '../validation/schemas.js';
 import { auth } from '../middlewares/auth.js';
-import { validate } from '../middlewares/validate.js';
+import { validate } from '../validation/validate.js';
 import { signupHandler } from './handlers/signupHandler.js';
 import { loginHandler } from './handlers/loginHandler.js';
 import { getPurchasesHandler } from './handlers/getPurchasesHandler.js';
