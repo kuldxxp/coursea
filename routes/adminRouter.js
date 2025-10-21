@@ -13,6 +13,12 @@ import { auth } from '../middlewares/auth.js';
 import { isAdmin } from '../middlewares/isAdmin.js';
 import { adminLoginHandler } from './handlers/adminLoginHandler.js';
 import { makeAdminHandler } from './handlers/makeAdminHandler.js';
+import { createCourseHandler } from './handlers/createCourseHandler.js';
+import { listCoursesHandler } from './handlers/listCoursesHandler.js';
+import { getCourseByIdHandler } from './handlers/getCourseByIdHandler.js';
+import { updateCourseHandler } from './handlers/updateCourseHandler.js';
+import { updateCourseStatusHandler } from './handlers/updateCourseStatusHandler.js';
+import { deleteCourseHandler } from './handlers/deleteCourseHandler.js'; 
 
 const adminRouter = express.Router();
 
@@ -32,39 +38,39 @@ adminRouter.get('/dashboard', (req, res) => {
 adminRouter.post(
     '/courses',
     validate(adminCourseCreateSchema),
-    (req, res) => {}
+    createCourseHandler
 );
 
 adminRouter.get(
     '/courses',
     validate(adminCourseListQuerySchema, 'query'),
-    (req, res) => {}
+    listCoursesHandler
 );
 
 adminRouter.get(
     '/courses/:courseId',
     validate(courseIdParamSchema, 'params'),
-    (req, res) => {}
+    getCourseByIdHandler
 );
 
 adminRouter.patch(
     '/courses/:courseId',
     validate(courseIdParamSchema, 'params'),
     validate(adminCourseUpdateSchema),
-    (req, res) => {}
+    updateCourseHandler
 );
 
 adminRouter.patch(
     '/courses/:courseId/status',
     validate(courseIdParamSchema, 'params'),
     validate(adminCourseStatusSchema),
-    (req, res) => {}
+    updateCourseStatusHandler
 );
 
 adminRouter.delete(
     '/courses/:courseId',
     validate(courseIdParamSchema, 'params'),
-    (req, res) => {}
+    deleteCourseHandler
 );
 
 adminRouter.patch(

@@ -6,7 +6,11 @@ import { previewCoursesHandler } from './handlers/previewCoursesHandler.js';
 
 const coursesRouter = express.Router();
 
-coursesRouter.get('/preview', validate(paginationSchema), previewCoursesHandler);
+coursesRouter.get(
+    '/preview',
+    validate(paginationSchema),
+    previewCoursesHandler
+);
 
 // coursesRouter.post('/purchase/:courseId', (req, res) => {});
 

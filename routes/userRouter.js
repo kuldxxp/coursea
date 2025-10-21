@@ -10,12 +10,29 @@ import { getPurchasedCourseById } from './handlers/getPurchasedCourseByIdHandler
 
 const userRouter = express.Router();
 
-userRouter.post('/signup', validate(signupSchema), signupHandler);
+userRouter.post(
+    '/signup',
+    validate(signupSchema),
+    signupHandler
+);
 
-userRouter.post('/login', validate(loginSchema), loginHandler);
+userRouter.post(
+    '/login',
+    validate(loginSchema),
+    loginHandler
+);
 
-userRouter.get('/purchases', auth, validate(paginationSchema), getPurchasesHandler);
+userRouter.get(
+    '/purchases',
+    auth,
+    validate(paginationSchema),
+    getPurchasesHandler
+);
 
-userRouter.get('/purchases/:courseId', auth, getPurchasedCourseById);
+userRouter.get(
+    '/purchases/:courseId',
+    auth,
+    getPurchasedCourseById
+);
 
 export default userRouter;
