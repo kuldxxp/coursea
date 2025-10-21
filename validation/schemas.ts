@@ -31,3 +31,37 @@ export const paginationSchema = z.object({
     page: z.coerce.number().int().min(1).default(1),
     limit: z.coerce.number().int().min(1).max(36).default(18),
 });
+
+export const forgotPasswordSchema = z.object({
+    emailId: z.email(),
+});
+
+export const resetPasswordSchema = z.object({
+    password: z
+        .string()
+        .min(8)
+        .max(20)
+        .regex(
+            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&][A-Za-z\d@$!%*?&]+$)/,
+            "Password must contain at least one uppercase, one lowercase, one number, and one special character"
+        ),
+});
+
+export const changePasswordSchema = z.object({
+    currentPassword: z
+        .string()
+        .min(8)
+        .max(20)
+        .regex(
+            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&][A-Za-z\d@$!%*?&]+$)/,
+            "Password must contain at least one uppercase, one lowercase, one number, and one special character"
+        ),
+    newPassword: z
+        .string()
+        .min(8)
+        .max(20)
+        .regex(
+            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&][A-Za-z\d@$!%*?&]+$)/,
+            "Password must contain at least one uppercase, one lowercase, one number, and one special character"
+        ), 
+});

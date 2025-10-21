@@ -1,4 +1,4 @@
-import { courseModel } from '../../db/schema.js';
+import { CourseModel } from '../../db/schema.js';
 
 export const listCoursesHandler = async (req, res) => {
   const { page, limit, status, category, q } = req.validatedQuery;

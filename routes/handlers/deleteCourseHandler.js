@@ -5,7 +5,7 @@ import { CourseModel } from '../../db/schema.js';
 export const deleteCourseHandler = async (req, res) => {
   const { courseId } = req.params;
 
-  if (!mongoose.isValidObject(courseId)) {
+  if (!mongoose.isValidObjectId(courseId)) {
     return res.status(400).json({ error: 'Invalid course Id' });
   }
 

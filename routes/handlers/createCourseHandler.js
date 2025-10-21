@@ -1,9 +1,9 @@
-import { courseModel } from '../../db/schema.js';
+import { CourseModel } from '../../db/schema.js';
 
 export const createCourseHandler = async (req, res) => {
   try {
     const payload = req.body;
-    const doc = await courseModel.create(payload);
+    const doc = await CourseModel.create(payload);
 
     return res.status(201).json(doc);
   } catch (err) {

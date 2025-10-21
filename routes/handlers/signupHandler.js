@@ -1,3 +1,5 @@
+import bcrypt from 'bcrypt';
+
 import { UserModel } from "../../db/schema.js";
 
 export const signupHandler = async (req, res) => {

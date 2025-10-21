@@ -6,7 +6,7 @@ export const updateCourseStatusHandler = async (req, res) => {
   const { courseId } = req.params;
   const { status } = req.body;
 
-  if (!mongoose.isValidObject(courseId)) {
+  if (!mongoose.isValidObjectId(courseId)) {
     return res.status(400).json({ error: 'Invalid course Id' });
   }
 
