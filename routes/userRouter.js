@@ -1,4 +1,5 @@
 import express from 'express';
+import passport from 'passport';
 
 import {
     signupSchema,
@@ -8,13 +9,17 @@ import {
     resetPasswordSchema,
     changePasswordSchema
 } from '../validation/schemas.ts';
-import { auth } from '../middlewares/auth.js';
+// import { auth } from '../middlewares/auth.js';
+import { auth } from '../middlewares/newAuth.js';
 import { validate } from '../validation/validate.js';
 import { signupHandler } from './handlers/signupHandler.js';
-import { loginHandler } from './handlers/loginHandler.js';
+// import { loginHandler } from './handlers/loginHandler.js';
 import { getPurchasesHandler } from './handlers/getPurchasesHandler.js';
 import { getPurchasedCourseById } from './handlers/getPurchasedCourseByIdHandler.js';
-import { forgotPasswordHandler, resetPasswordHandler } from './handlers/forgotPasswordHandler.js'
+import {
+    forgotPasswordHandler,
+    resetPasswordHandler
+} from './handlers/forgotPasswordHandler.js'
 import { changePasswordHandler } from './handlers/changePasswordHandler.js';
 
 const userRouter = express.Router();
@@ -32,8 +37,28 @@ userRouter.post(
 userRouter.post(
     '/login',
     validate(loginSchema),
-    loginHandler
+    passport.authenticate('local'),
+    (req, res) => {
+        res.status(200).json({
+            message: 'Logged in',
+            user: { id: req.user._id, username: req.user.username }
+        });
+    }
 );
+
+userRouter.post('/logout', (req, res, next) => {
+    req.logout(err => {
+        if (err) {
+            return next(err);
+        }
+
+        req.session.destroy(() => {
+            res.clearCookie('sid');
+            
+            res.status(200).json({ message: 'Logged out' });
+        });
+    });
+});
 
 userRouter.get(
     '/purchases',

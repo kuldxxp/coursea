@@ -1,4 +1,5 @@
 import express from 'express';
+import passport from 'passport';
 
 import { validate } from '../validation/validate.js';
 import { loginSchema } from '../validation/schemas.ts';
@@ -9,9 +10,10 @@ import {
     adminCourseListQuerySchema,
     adminCourseStatusSchema,
 } from '../validation/adminCoursesSchemas.ts';
-import { auth } from '../middlewares/auth.js';
+// import { auth } from '../middlewares/auth.js';
+import { auth } from '../middlewares/newAuth.js';
 import { isAdmin } from '../middlewares/isAdmin.js';
-import { adminLoginHandler } from './handlers/adminLoginHandler.js';
+// import { adminLoginHandler } from './handlers/adminLoginHandler.js';
 import { makeAdminHandler } from './handlers/makeAdminHandler.js';
 import { createCourseHandler } from './handlers/createCourseHandler.js';
 import { listCoursesHandler } from './handlers/listCoursesHandler.js';
@@ -25,7 +27,23 @@ const adminRouter = express.Router();
 adminRouter.post(
     '/login',
     validate(loginSchema),
-    adminLoginHandler
+    passport.authenticate('local'),
+    (req, res) => {
+        if (!req.user?.isAdmin) {
+            req.logout(() => {
+                res.clearCookie('sid');
+
+                res.status(403).json({ error: 'Not an admin account.' });
+            });
+
+            return;
+        }
+
+        res.status(200).json({
+            message: 'Admin logged in',
+            user: { id: req.user._id, username: req.user.username }
+        });
+    }
 );
 
 adminRouter.use(auth);

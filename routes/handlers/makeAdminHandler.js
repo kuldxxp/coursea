@@ -2,7 +2,7 @@ import { UserModel } from "../../db/schema.js";
 
 export const makeAdminHandler = async (req, res) => {
     try {
-        const user = await UserModel.findOneAndUpdate(
+        const user = await UserModel.findByIdAndUpdate(
             req.params.id,
             { isAdmin: true },
             { new: true }

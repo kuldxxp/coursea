@@ -22,7 +22,7 @@ export const changePasswordHandler = async (req, res) => {
       return res.status(401).json({ error: 'Current password is incorrect' });
     }
 
-    user.password = await bcrypt.hash(newPassword, parseInt(process.env.SALT_ROUND));
+    user.password = await bcrypt.hash(newPassword, parseInt(process.env.SALT_ROUNDS ?? '12', 10));
     await user.save();
 
     return res.status(200).json({ message: 'Password changed successfully' });

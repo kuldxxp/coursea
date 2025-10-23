@@ -2,7 +2,8 @@ import express from 'express';
 
 import { paginationSchema } from '../validation/schemas.ts';
 import { validate } from '../validation/validate.js';
-import { tryAuth } from '../middlewares/tryAuth.js';
+// import { tryAuth } from '../middlewares/tryAuth.js';
+import { tryAuth } from '../middlewares/newTryAuth.js';
 import { previewCoursesHandler } from './handlers/previewCoursesHandler.js';
 import { previewCourseDetailHandler } from './handlers/previewCourseDetailHandler.js';
 
