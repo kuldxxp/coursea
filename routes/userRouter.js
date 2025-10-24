@@ -21,6 +21,7 @@ import {
     resetPasswordHandler
 } from './handlers/forgotPasswordHandler.js'
 import { changePasswordHandler } from './handlers/changePasswordHandler.js';
+import { verifyRazorpayHandler } from './handlers/verifyRazorpayHandler.js';
 
 const userRouter = express.Router();
 
@@ -39,8 +40,15 @@ userRouter.post(
     validate(loginSchema),
     passport.authenticate('local'),
     (req, res) => {
+        const nextUrl = req.session.returnTo || null;
+
+        if (nextUrl) {
+          delete req.session.returnTo;
+        }
+
         res.status(200).json({
             message: 'Logged in',
+            nextUrl,
             user: { id: req.user._id, username: req.user.username }
         });
     }
@@ -74,6 +82,12 @@ userRouter.get(
 );
 
 userRouter.post(
+    '/payments/verify',
+    auth,
+    verifyRazorpayHandler
+);
+
+userRouter.post(
     '/forgot-password',
     validate(forgotPasswordSchema),
     forgotPasswordHandler
@@ -93,3 +107,4 @@ userRouter.post(
 );
 
 export default userRouter;
+

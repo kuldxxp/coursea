@@ -10,6 +10,7 @@ import userRouter from './routes/userRouter.js';
 import coursesRouter from './routes/coursesRouter.js';
 import adminRouter from './routes/adminRouter.js';
 import authRouter from './routes/authRouter.js';
+import { razorpayWebhookHandler } from './routes/handlers/razorpayWebhookHandler.js';
 
 dotenv.config();
 
@@ -27,6 +28,12 @@ const MONGO_URI = process.env.MONGO_URI;
 })();
 
 const app = express();
+
+app.post(
+    '/user/payments/webhook',
+    express.raw({ type: 'application/json' }),
+    razorpayWebhookHandler
+);
 
 app.use(express.json());
 app.use(cookieParser());
