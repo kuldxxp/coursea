@@ -11,6 +11,11 @@ const userSchema = new Schema(
         password: { type: String, required: true, select: false },
         isAdmin: { type: Boolean, default: false },
         isActive: { type: Boolean, default: true },
+        emailVerified: { type: Boolean, default: false },
+
+        otpHash: { type: String, select: false },
+        otpExpiresAt: { type: Date },
+        otpAttempts: { type: Number, default: 0 },
     }, { timestamps: true }
 );
 

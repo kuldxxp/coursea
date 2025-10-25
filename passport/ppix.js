@@ -29,7 +29,7 @@ passport.use(
         { usernameField: 'username', passwordField: 'password' },
         async (username, password, done) => {
             try {
-                const user = await UserModel.findById(id).select('+password');
+                const user = await UserModel.findOne({ username }).select('+password');
 
                 if (!user) {
                     return done(null, false, { message: 'Invalid credentials' });
@@ -39,6 +39,10 @@ passport.use(
 
                 if (!ok) {
                     return done(null, false, { message: 'Invalid credentials' });
+                }
+
+                if (!user.emailVerified) {
+                    return done(null, false, { message: 'Please verify your email before logging in' })
                 }
 
                 if (user.isActive === false) {

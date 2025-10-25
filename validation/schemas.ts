@@ -65,3 +65,22 @@ export const changePasswordSchema = z.object({
             "Password must contain at least one uppercase, one lowercase, one number, and one special character"
         ), 
 });
+
+export const sendSignupOtpSchema = z.object({
+    name: z.string().trim().min(1),
+    username: z.string().trim().min(3),
+    emailId: z.email(),
+    password: z
+        .string()
+        .min(8)
+        .max(20)
+        .regex(
+            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&][A-Za-z\d@$!%*?&]+$)/,
+            "Password must contain at least one uppercase, one lowercase, one number, and one special character"
+        ),
+});
+
+export const verifySignupOtpSchema = z.object({
+    emailId: z.email(),
+    code: z.string().trim().length(6),
+});

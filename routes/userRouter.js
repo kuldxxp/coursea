@@ -7,7 +7,9 @@ import {
     paginationSchema,
     forgotPasswordSchema,
     resetPasswordSchema,
-    changePasswordSchema
+    changePasswordSchema,
+    sendSignupOtpSchema,
+    verifySignupOtpSchema,
 } from '../validation/schemas.ts';
 // import { auth } from '../middlewares/auth.js';
 import { auth } from '../middlewares/newAuth.js';
@@ -22,6 +24,8 @@ import {
 } from './handlers/forgotPasswordHandler.js'
 import { changePasswordHandler } from './handlers/changePasswordHandler.js';
 import { verifyRazorpayHandler } from './handlers/verifyRazorpayHandler.js';
+import { sendSignupOtp } from './handlers/sendSignupOtp.js';
+import { verifySignupOtp } from './handlers/verifySignupOtp.js';
 
 const userRouter = express.Router();
 
@@ -79,6 +83,18 @@ userRouter.get(
     '/purchases/:courseId',
     auth,
     getPurchasedCourseById
+);
+
+userRouter.post(
+    '/signup/otp',
+    validate(sendSignupOtpSchema),
+    sendSignupOtp
+);
+
+userRouter.post(
+    'signup/verify',
+    validate(verifySignupOtpSchema),
+    verifySignupOtp
 );
 
 userRouter.post(
