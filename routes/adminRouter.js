@@ -13,6 +13,7 @@ import {
 // import { auth } from '../middlewares/auth.js';
 import { auth } from '../middlewares/newAuth.js';
 import { isAdmin } from '../middlewares/isAdmin.js';
+import { adminWriteLimiter } from '../middlewares/rateLimit.js';
 // import { adminLoginHandler } from './handlers/adminLoginHandler.js';
 import { makeAdminHandler } from './handlers/makeAdminHandler.js';
 import { createCourseHandler } from './handlers/createCourseHandler.js';
@@ -55,6 +56,7 @@ adminRouter.get('/dashboard', (req, res) => {
 
 adminRouter.post(
     '/courses',
+    adminWriteLimiter,
     validate(adminCourseCreateSchema),
     createCourseHandler
 );
@@ -73,6 +75,7 @@ adminRouter.get(
 
 adminRouter.patch(
     '/courses/:courseId',
+    adminWriteLimiter,
     validate(courseIdParamSchema, 'params'),
     validate(adminCourseUpdateSchema),
     updateCourseHandler
@@ -80,6 +83,7 @@ adminRouter.patch(
 
 adminRouter.patch(
     '/courses/:courseId/status',
+    adminWriteLimiter,
     validate(courseIdParamSchema, 'params'),
     validate(adminCourseStatusSchema),
     updateCourseStatusHandler
@@ -87,6 +91,7 @@ adminRouter.patch(
 
 adminRouter.delete(
     '/courses/:courseId',
+    adminWriteLimiter,
     validate(courseIdParamSchema, 'params'),
     deleteCourseHandler
 );

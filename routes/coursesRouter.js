@@ -5,6 +5,7 @@ import { validate } from '../validation/validate.js';
 // import { tryAuth } from '../middlewares/tryAuth.js';
 import { tryAuth } from '../middlewares/newTryAuth.js';
 import { requireAuthOrRemember } from '../middlewares/requireAuthOrRemember.js';
+import { checkoutLimiter } from '../middlewares/rateLimit.js';
 import { previewCoursesHandler } from './handlers/previewCoursesHandler.js';
 import { previewCourseDetailHandler } from './handlers/previewCourseDetailHandler.js';
 import { createCheckoutOrderHandler } from './handlers/createCheckoutOrderHandler.js';
@@ -25,6 +26,7 @@ coursesRouter.get(
 
 coursesRouter.post(
     '/:courseId/checkout',
+    checkoutLimiter,
     requireAuthOrRemember,
     createCheckoutOrderHandler
 );

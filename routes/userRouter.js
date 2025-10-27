@@ -13,6 +13,14 @@ import {
 } from '../validation/schemas.ts';
 // import { auth } from '../middlewares/auth.js';
 import { auth } from '../middlewares/newAuth.js';
+import {
+    loginLimiter,
+    otpSendLimiter,
+    otpVerifyLimiter,
+    otpVerifySlowdown,
+    forgotResetLimiter,
+    verifyPaymentsLimiter,
+} from '../middlewares/rateLimit.js';
 import { validate } from '../validation/validate.js';
 import { signupHandler } from './handlers/signupHandler.js';
 // import { loginHandler } from './handlers/loginHandler.js';
@@ -41,6 +49,7 @@ userRouter.post(
 
 userRouter.post(
     '/login',
+    loginLimiter,
     validate(loginSchema),
     passport.authenticate('local'),
     (req, res) => {
@@ -87,12 +96,15 @@ userRouter.get(
 
 userRouter.post(
     '/signup/otp',
+    otpSendLimiter,
     validate(sendSignupOtpSchema),
     sendSignupOtp
 );
 
 userRouter.post(
     'signup/verify',
+    otpVerifyLimiter,
+    otpVerifySlowdown,
     validate(verifySignupOtpSchema),
     verifySignupOtp
 );
@@ -105,12 +117,14 @@ userRouter.post(
 
 userRouter.post(
     '/forgot-password',
+    forgotResetLimiter,
     validate(forgotPasswordSchema),
     forgotPasswordHandler
 );
 
 userRouter.post(
     '/reset-password/:token',
+    forgotResetLimiter,
     validate(resetPasswordSchema),
     resetPasswordHandler
 );
@@ -118,6 +132,7 @@ userRouter.post(
 userRouter.post(
     '/change-password',
     auth,
+    verifyPaymentsLimiter,
     validate(changePasswordSchema),
     changePasswordHandler
 );

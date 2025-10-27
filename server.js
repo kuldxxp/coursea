@@ -4,18 +4,19 @@ import MongoStore from 'connect-mongo';
 import session from 'express-session';
 import cookieParser from 'cookie-parser';
 import passport from 'passport';
+import cors from 'cors';
 import dotenv from 'dotenv';
 
 import userRouter from './routes/userRouter.js';
 import coursesRouter from './routes/coursesRouter.js';
 import adminRouter from './routes/adminRouter.js';
 import authRouter from './routes/authRouter.js';
+import { webhookLimiter } from './middlewares/rateLimit.js';
 import { razorpayWebhookHandler } from './routes/handlers/razorpayWebhookHandler.js';
 
 dotenv.config();
 
 const PORT = process.env.PORT || 8000;
-const SALT_ROUNDS = process.env.SALT_ROUNDS || 12;
 const MONGO_URI = process.env.MONGO_URI;
 
 (async () => {
@@ -31,12 +32,18 @@ const app = express();
 
 app.post(
     '/user/payments/webhook',
+    webhookLimiter,
     express.raw({ type: 'application/json' }),
     razorpayWebhookHandler
 );
 
 app.use(express.json());
 app.use(cookieParser());
+
+app.use(cors({
+    origin: process.env.CLIENT_URL,
+    credentials: true,
+}));
 
 app.use(
     session({
