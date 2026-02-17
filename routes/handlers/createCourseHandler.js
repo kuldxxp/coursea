@@ -12,6 +12,6 @@ export const createCourseHandler = async (req, res) => {
     }
 
     console.error(`Create course error: ${err}`);
-    return res.status().json({ error: 'Failed to create course' });
+    return res.status(500).json({ error: 'Failed to create course' });
   }
 };

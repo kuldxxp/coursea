@@ -21,7 +21,7 @@ import { listCoursesHandler } from './handlers/listCoursesHandler.js';
 import { getCourseByIdHandler } from './handlers/getCourseByIdHandler.js';
 import { updateCourseHandler } from './handlers/updateCourseHandler.js';
 import { updateCourseStatusHandler } from './handlers/updateCourseStatusHandler.js';
-import { deleteCourseHandler } from './handlers/deleteCourseHandler.js'; 
+import { deleteCourseHandler } from './handlers/deleteCourseHandler.js';
 
 const adminRouter = express.Router();
 
@@ -98,6 +98,7 @@ adminRouter.delete(
 
 adminRouter.patch(
     '/make-admin/:id',
+    validate(courseIdParamSchema.extend({ id: courseIdParamSchema.shape.courseId }), 'params'),
     makeAdminHandler
 );
 

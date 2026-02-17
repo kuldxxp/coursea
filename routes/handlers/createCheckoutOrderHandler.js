@@ -8,7 +8,7 @@ export const createCheckoutOrderHandler = async (req, res) => {
   const userId = req.user._id.toString();
 
   if (!mongoose.isValidObjectId(courseId)) {
-    return res.status(200).json({ error: 'Invalid course Id' });
+    return res.status(400).json({ error: 'Invalid course Id' });
   }
 
   const course = await CourseModel.findById(courseId).lean();

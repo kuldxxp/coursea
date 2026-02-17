@@ -56,7 +56,7 @@ userRouter.post(
         const nextUrl = req.session.returnTo || null;
 
         if (nextUrl) {
-          delete req.session.returnTo;
+            delete req.session.returnTo;
         }
 
         res.status(200).json({
@@ -75,7 +75,7 @@ userRouter.post('/logout', (req, res, next) => {
 
         req.session.destroy(() => {
             res.clearCookie('sid');
-            
+
             res.status(200).json({ message: 'Logged out' });
         });
     });
@@ -102,7 +102,7 @@ userRouter.post(
 );
 
 userRouter.post(
-    'signup/verify',
+    '/signup/verify',
     otpVerifyLimiter,
     otpVerifySlowdown,
     validate(verifySignupOtpSchema),

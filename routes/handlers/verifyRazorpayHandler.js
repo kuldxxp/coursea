@@ -5,7 +5,7 @@ import { EnrollmentModel, CourseModel } from '../../db/schema.js';
 
 export const verifyRazorpayHandler = async (req, res) => {
   const userId = req.user._id.toString();
-  const { courseId, razorpay_order_id, razorpay_payment_id, rayzorpay_signature } = req.body;
+  const { courseId, razorpay_order_id, razorpay_payment_id, razorpay_signature } = req.body;
 
   if (!mongoose.isValidObjectId(courseId)) {
     return res.status(400).json({ error: 'Invalid course Id' });
@@ -31,7 +31,7 @@ export const verifyRazorpayHandler = async (req, res) => {
       userId,
       courseId,
       pricePaid: course.price,
-      purchaseAt: new Date(),
+      purchasedAt: new Date(),
     });
 
     return res.status(201).json({

@@ -1,13 +1,18 @@
 import bcrypt from 'bcrypt';
+import dotenv from 'dotenv';
 
 import { UserModel } from "../../db/schema.js";
 
+dotenv.config();
+
+const SALT_ROUNDS = parseInt(process.env.SALT_ROUNDS ?? '12', 10);
+
 export const signupHandler = async (req, res) => {
     const { name, username, emailId, age, password } = req.body;
-    
+
     try {
         const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS);
-        
+
         await UserModel.create({
             name,
             username,

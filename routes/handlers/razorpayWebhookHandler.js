@@ -10,7 +10,7 @@ export const razorpayWebhookHandler = async (req, res) => {
     const webhookSecret = process.env.RAZORPAY_WEBHOOK_SECRET;
     const signature = req.headers['x-razorpay-signature'];
 
-    if (!webhookSecret|| !signature) {
+    if (!webhookSecret || !signature) {
       return res.status(400).json({ error: 'Missing webhook secret/signature' });
     }
 

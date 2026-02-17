@@ -11,6 +11,11 @@ export const makeAdminHandler = async (req, res) => {
         if (!user) {
             return res.status(404).json({ error: 'User not found' });
         }
+
+        return res.status(200).json({
+            message: 'User promoted to admin.',
+            user,
+        });
     } catch (err) {
         console.error(`Error promoting user: ${err}`);
         res.status(500).json({ error: 'Failed to promote user.' });

@@ -16,8 +16,8 @@ passport.serializeUser((user, done) => {
 
 passport.deserializeUser(async (id, done) => {
     try {
-        const user = await UserModel.findById(id).select('+password');
-        
+        const user = await UserModel.findById(id);
+
         done(null, user || false);
     } catch (err) {
         done(err, false);
@@ -62,12 +62,12 @@ passport.use(
         {
             clientID: process.env.GOOGLE_CLIENT_ID,
             clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-            callbackURL: `${BASE_URL}/user/auth/google/callback`,
+            callbackURL: `${BASE_URL}/auth/google/callback`,
         },
         async (accessToken, refreshToken, profile, done) => {
             try {
-                const email = profile.emails?.[0]?.value?.toLowerCase(); 
-                
+                const email = profile.emails?.[0]?.value?.toLowerCase();
+
                 if (!email) {
                     return done(null, false, { message: 'No email from Google' });
                 }

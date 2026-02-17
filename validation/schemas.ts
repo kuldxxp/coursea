@@ -1,4 +1,4 @@
-import * as z  from 'zod';
+import * as z from 'zod';
 
 export const signupSchema = z.object({
     name: z.string().trim().min(3).max(30).optional(),
@@ -10,7 +10,7 @@ export const signupSchema = z.object({
         .min(8)
         .max(20)
         .regex(
-            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&][A-Za-z\d@$!%*?&]+$)/,
+            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/,
             "Password must contain at least one uppercase, one lowercase, one number, and one special character"
         ),
 });
@@ -22,7 +22,7 @@ export const loginSchema = z.object({
         .min(8)
         .max(20)
         .regex(
-            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&][A-Za-z\d@$!%*?&]+$)/,
+            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/,
             "Password must contain at least one uppercase, one lowercase, one number, and one special character"
         ),
 });
@@ -42,7 +42,7 @@ export const resetPasswordSchema = z.object({
         .min(8)
         .max(20)
         .regex(
-            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&][A-Za-z\d@$!%*?&]+$)/,
+            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/,
             "Password must contain at least one uppercase, one lowercase, one number, and one special character"
         ),
 });
@@ -53,7 +53,7 @@ export const changePasswordSchema = z.object({
         .min(8)
         .max(20)
         .regex(
-            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&][A-Za-z\d@$!%*?&]+$)/,
+            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/,
             "Password must contain at least one uppercase, one lowercase, one number, and one special character"
         ),
     newPassword: z
@@ -61,9 +61,9 @@ export const changePasswordSchema = z.object({
         .min(8)
         .max(20)
         .regex(
-            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&][A-Za-z\d@$!%*?&]+$)/,
+            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/,
             "Password must contain at least one uppercase, one lowercase, one number, and one special character"
-        ), 
+        ),
 });
 
 export const sendSignupOtpSchema = z.object({
@@ -75,7 +75,7 @@ export const sendSignupOtpSchema = z.object({
         .min(8)
         .max(20)
         .regex(
-            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&][A-Za-z\d@$!%*?&]+$)/,
+            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/,
             "Password must contain at least one uppercase, one lowercase, one number, and one special character"
         ),
 });

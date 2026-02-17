@@ -20,8 +20,13 @@ export const sendSignupOtp = async (req, res) => {
         }
 
         if (!user) {
+            const existingUsername = await UserModel.findOne({ username });
+            if (existingUsername) {
+                return res.status(409).json({ error: 'Username already taken' });
+            }
+
             const hash = await bcrypt.hash(password, SALT_ROUNDS);
-            
+
             user = await UserModel.create({
                 name, username, emailId,
                 password: hash,
@@ -43,7 +48,6 @@ export const sendSignupOtp = async (req, res) => {
 
         const transporter = nodemailer.createTransport({
             service: 'gmail',
-            service: true,
             auth: { user: process.env.GMAIL, pass: process.env.PASS },
         });
 

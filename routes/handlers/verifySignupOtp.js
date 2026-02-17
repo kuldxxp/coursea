@@ -18,7 +18,7 @@ export const verifySignupOtp = async (req, res) => {
             return res.status(200).json({ message: 'Already verified' });
         }
 
-        if (!user.otpHash || !user.otpExpiresAt || !user.otpAttempts >= 5) {
+        if (!user.otpHash || !user.otpExpiresAt || user.otpAttempts >= 5) {
             return res.status(400).json({ error: 'Code invalid or too many attempts' });
         }
 
